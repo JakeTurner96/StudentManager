@@ -1,3 +1,5 @@
+package studentmgr;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -57,14 +59,14 @@ public class Main {
                                     int updatedAge = scanner.nextInt();
                                     scanner.nextLine();
                                     studentRecord.getStudent(editName).updateAge(updatedAge);
-                                    System.out.println("Student age updated");
+                                    System.out.println("studentmgr.Student age updated");
                                     break;
 
                                 case 3:
                                     System.out.println("Please enter the new course");
                                     String updatedCourse = scanner.nextLine();
                                     studentRecord.getStudent(editName).updateCourse(updatedCourse);
-                                    System.out.println("Student course updated");
+                                    System.out.println("studentmgr.Student course updated");
                                     break;
 
                                 case 4:
@@ -97,7 +99,7 @@ public class Main {
 
                         if (studentRecord.studentExists(deleteStudentName)) {
                             studentRecord.deleteStudent(deleteStudentName);
-                            System.out.println("Student record was successfully deleted");
+                            System.out.println("studentmgr.Student record was successfully deleted");
                         } else {
                             System.out.println("A student with the name '" + deleteStudentName + "' does not exist");
                         }

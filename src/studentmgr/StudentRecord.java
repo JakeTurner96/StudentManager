@@ -1,27 +1,14 @@
+package studentmgr;
+
 import java.util.HashMap;
 
-public class StudentRecord {
+public class StudentRecord implements Runnable{
 
     private static HashMap<String, Student> studentHashMap;
     private static final StudentRecord studentRecordInstance = new StudentRecord();
 
     private StudentRecord() {
-        studentHashMap = new HashMap<>();
-
-        Student s1 = new Student("Jake Turner", 19, "Computer Science");
-        studentHashMap.put(s1.getName(), s1);
-
-        Student s2 = new Student("Hannah Tilbury", 20, "Veterinary medicine ");
-        studentHashMap.put(s2.getName(), s2);
-
-        Student s3 = new Student("Sam Short", 20, "Ancient history");
-        studentHashMap.put(s3.getName(), s3);
-
-        Student s4 = new Student("Mia Hardcastle", 19, "Business management");
-        studentHashMap.put(s4.getName(), s4);
-
-        Student s5 = new Student("Sam Stephens", 23, "Electronic engineering");
-        studentHashMap.put(s5.getName(), s5);
+        run();
     }
 
     public static StudentRecord getInstance() {
@@ -42,5 +29,25 @@ public class StudentRecord {
 
     public boolean studentExists(String name) {
         return studentHashMap.containsKey(name);
+    }
+
+    @Override
+    public void run() {
+        studentHashMap = new HashMap<>();
+
+        Student s1 = new Student("Jake Turner", 19, "Computer Science");
+        studentHashMap.put(s1.getName(), s1);
+
+        Student s2 = new Student("Hannah Tilbury", 20, "Veterinary medicine ");
+        studentHashMap.put(s2.getName(), s2);
+
+        Student s3 = new Student("Sam Short", 20, "Ancient history");
+        studentHashMap.put(s3.getName(), s3);
+
+        Student s4 = new Student("Mia Hardcastle", 19, "Business management");
+        studentHashMap.put(s4.getName(), s4);
+
+        Student s5 = new Student("Sam Stephens", 23, "Electronic engineering");
+        studentHashMap.put(s5.getName(), s5);
     }
 }

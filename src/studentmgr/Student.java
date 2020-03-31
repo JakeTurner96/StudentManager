@@ -1,3 +1,4 @@
+package studentmgr;
 
 public class Student {
 

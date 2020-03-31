@@ -1,12 +1,12 @@
-import java.util.Hashtable;
+import java.util.HashMap;
 
 public class StudentRecord {
 
-    private static Hashtable<String, Student> studentHashMap;
+    private static HashMap<String, Student> studentHashMap;
     private static final StudentRecord studentRecordInstance = new StudentRecord();
 
     private StudentRecord() {
-        studentHashMap = new Hashtable<>();
+        studentHashMap = new HashMap<>();
 
         Student s1 = new Student("Jake Turner", 19, "Computer Science");
         studentHashMap.put(s1.getName(), s1);

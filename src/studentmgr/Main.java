@@ -9,9 +9,11 @@ public class Main {
     private static StudentRecord studentRecord = StudentRecord.getInstance();
     private static boolean exit = false;
     private static int menuDecision;
+    private static Thread recordThread = new Thread(studentRecord);
 
     public static void main(String[] args) {
 
+        recordThread.start();
         System.out.println("\nPlease select a number from the menu:");
 
         while (!exit) {
@@ -20,6 +22,7 @@ public class Main {
                 menuDecision = scanner.nextInt();
                 scanner.nextLine();
                 switch (menuDecision) {
+                    //Add new student case
                     case 1:
                         System.out.println("Please enter the students full name");
                         String newName = scanner.nextLine();
@@ -39,21 +42,21 @@ public class Main {
                             System.out.println("A student record with the name " + newName + " already exists, no record was created");
                         }
                         break;
-
+                    //Edit existing student case
                     case 2:
                         System.out.println("Please enter the full name of the student you want to edit");
                         String editName = scanner.nextLine();
-
                         if (studentRecord.studentExists(editName)) {
                             System.out.println("\nPlease select a number from the menu:\n\n1. Edit name\n2. Edit age\n3. Edit course\n4. Exit");
                             int editMenuDecision = scanner.nextInt();
                             scanner.nextLine();
                             switch (editMenuDecision) {
+                                //Edit name sub case (NOT yet implemented)
                                 case 1:
-//                                System.out.println("Please enter the new name");
-//                                String updatedName = scanner.nextLine();
+                                    //System.out.println("Please enter the new name");
+                                    //String updatedName = scanner.nextLine();
                                     break;
-
+                                //Edit age sub case
                                 case 2:
                                     System.out.println("Please enter the new age");
                                     int updatedAge = scanner.nextInt();
@@ -61,17 +64,16 @@ public class Main {
                                     studentRecord.getStudent(editName).updateAge(updatedAge);
                                     System.out.println("studentmgr.Student age updated");
                                     break;
-
+                                //Edit course sub case
                                 case 3:
                                     System.out.println("Please enter the new course");
                                     String updatedCourse = scanner.nextLine();
                                     studentRecord.getStudent(editName).updateCourse(updatedCourse);
                                     System.out.println("studentmgr.Student course updated");
                                     break;
-
+                                //Exit sub case
                                 case 4:
                                     break;
-
                                 default:
                                     System.out.println("Invalid input");
                             }
@@ -80,7 +82,7 @@ public class Main {
                             System.out.println("A student with the name '" + editName + "' does not exist");
                         }
                         break;
-
+                    //Search existing student record case
                     case 3:
                         System.out.println("Please enter the full name of the student you want to search for");
                         String searchName = scanner.nextLine();
@@ -92,7 +94,7 @@ public class Main {
                             System.out.println("A student with the name '" + searchName + "' does not exist");
                         }
                         break;
-
+                    //Delete existing student record case
                     case 4:
                         System.out.println("Please enter the name of the student you want to delete");
                         String deleteStudentName = scanner.nextLine();
@@ -104,7 +106,7 @@ public class Main {
                             System.out.println("A student with the name '" + deleteStudentName + "' does not exist");
                         }
                         break;
-
+                    //Exit case
                     case 5:
                         exit = true;
                         break;

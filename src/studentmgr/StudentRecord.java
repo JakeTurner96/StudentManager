@@ -8,7 +8,7 @@ public class StudentRecord implements Runnable{
     private static final StudentRecord studentRecordInstance = new StudentRecord();
 
     private StudentRecord() {
-        run();
+
     }
 
     public static StudentRecord getInstance() {
@@ -33,6 +33,7 @@ public class StudentRecord implements Runnable{
 
     @Override
     public void run() {
+        //Populate HashMap with example student records
         studentHashMap = new HashMap<>();
 
         Student s1 = new Student("Jake Turner", 19, "Computer Science");

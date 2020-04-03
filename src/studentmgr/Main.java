@@ -8,7 +8,6 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static StudentRecord studentRecord = StudentRecord.getInstance();
     private static boolean exit = false;
-    private static int menuDecision;
     private static Thread recordThread = new Thread(studentRecord);
 
     public static void main(String[] args) {
@@ -19,7 +18,7 @@ public class Main {
         while (!exit) {
             System.out.println("\n1. Add new student\n2. Edit existing student\n3. Search student\n4. Delete student\n5. Exit");
             try {
-                menuDecision = scanner.nextInt();
+                int menuDecision = scanner.nextInt();
                 scanner.nextLine();
                 switch (menuDecision) {
                     //Add new student case
@@ -47,32 +46,27 @@ public class Main {
                         System.out.println("Please enter the full name of the student you want to edit");
                         String editName = scanner.nextLine();
                         if (studentRecord.studentExists(editName)) {
-                            System.out.println("\nPlease select a number from the menu:\n\n1. Edit name\n2. Edit age\n3. Edit course\n4. Exit");
+                            System.out.println("\nPlease select a number from the menu:\n\n1. Edit age\n2. Edit course\n3. Exit");
                             int editMenuDecision = scanner.nextInt();
                             scanner.nextLine();
                             switch (editMenuDecision) {
-                                //Edit name sub case (NOT yet implemented)
-                                case 1:
-                                    //System.out.println("Please enter the new name");
-                                    //String updatedName = scanner.nextLine();
-                                    break;
                                 //Edit age sub case
-                                case 2:
+                                case 1:
                                     System.out.println("Please enter the new age");
                                     int updatedAge = scanner.nextInt();
                                     scanner.nextLine();
                                     studentRecord.getStudent(editName).updateAge(updatedAge);
-                                    System.out.println("studentmgr.Student age updated");
+                                    System.out.println("Student age updated");
                                     break;
                                 //Edit course sub case
-                                case 3:
+                                case 2:
                                     System.out.println("Please enter the new course");
                                     String updatedCourse = scanner.nextLine();
                                     studentRecord.getStudent(editName).updateCourse(updatedCourse);
-                                    System.out.println("studentmgr.Student course updated");
+                                    System.out.println("Student course updated");
                                     break;
                                 //Exit sub case
-                                case 4:
+                                case 3:
                                     break;
                                 default:
                                     System.out.println("Invalid input");
@@ -101,7 +95,7 @@ public class Main {
 
                         if (studentRecord.studentExists(deleteStudentName)) {
                             studentRecord.deleteStudent(deleteStudentName);
-                            System.out.println("studentmgr.Student record was successfully deleted");
+                            System.out.println("Student record was successfully deleted");
                         } else {
                             System.out.println("A student with the name '" + deleteStudentName + "' does not exist");
                         }
@@ -110,7 +104,6 @@ public class Main {
                     case 5:
                         exit = true;
                         break;
-
                     default:
                         System.out.println("Invalid input");
                         break;

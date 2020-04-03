@@ -1,41 +1,51 @@
 package studentmgr;
 
-public class Student {
+import java.util.HashMap;
 
+public class Student implements Record {
+
+    private int studentID;
+    private String courseTitle;
     private String name;
-    private int age;
-    private String course;
+    private String dateOfBirth;
+    private HashMap<Integer, Module> modules;
 
-    public Student(String name, int age, String course) {
+    public Student(int studentID, String courseTitle, String name, String dateOfBirth) {
+        this.studentID = studentID;
+        this.courseTitle = courseTitle;
         this.name = name;
-        this.age = age;
-        this.course = course;
+        this.dateOfBirth = dateOfBirth;
+        modules = new HashMap<>();
     }
 
-    //Return the name of the student
-    public String getName() {
+    @Override
+    public int getID() {
+        return studentID;
+    }
+
+    @Override
+    public String getTitle() {
+        return courseTitle;
+    }
+
+    @Override
+    public void setTitle(String newTitle) {
+        courseTitle = newTitle;
+    }
+
+    public String getStudentName() {
         return name;
     }
 
-    //Return the age of the student
-    public int getAge() {
-        return age;
-    }
-
-    //Return the course of the student
-    public String getCourse() {
-        return course;
+    public String getDateOfBirth() {
+        return dateOfBirth;
     }
 
     public void updateName(String newName) {
         name = newName;
     }
 
-    public void updateAge(int newAge) {
-        age = newAge;
-    }
-
-    public void updateCourse(String newCourse) {
-        course = newCourse;
+    public void updateDateOfBirth(String newDateOfBirth) {
+        dateOfBirth = newDateOfBirth;
     }
 }

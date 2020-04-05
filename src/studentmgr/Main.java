@@ -75,12 +75,12 @@ public class Main {
                     System.out.println("Please enter the ID of the student you want to search for");
                     int searchID = scanner.nextInt();
                     scanner.nextLine();
-//                    if (studentManager.studentExists(searchID)) {
+                    if (studentManager.studentExists(searchID)) {
                         Student searchStudent = (Student) studentManager.getRecord(searchID);
                         System.out.println("Name: " + searchStudent.getStudentName() + "\nAge: " + searchStudent.getDateOfBirth() + "\nCourse: " + searchStudent.getTitle());
-//                    } else {
-//                        System.out.println("A student with the ID '" + searchID + "' does not exist");
-//                    }
+                    } else {
+                        System.out.println("A student with the ID '" + searchID + "' does not exist");
+                    }
                     break;
                 //Delete existing student record case
                 case 4:

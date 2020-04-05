@@ -1,11 +1,11 @@
 package studentmgr;
 
-interface Record {
+public interface Record {
 
-    public int getID();
+    int getID();
 
-    public String getTitle();
+    String getTitle();
 
-    public void setTitle(String newTitle);
+    void setTitle(String newTitle);
 
 }

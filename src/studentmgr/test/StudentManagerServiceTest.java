@@ -21,14 +21,14 @@ public class StudentManagerServiceTest {
     }
 
     @Test
-    public void removeStudent() {
+    public void removeStudent() throws StudentNotFoundException {
         serviceTest.addStudent(1, student);
         serviceTest.removeStudent(1);
         assertFalse(serviceTest.studentExists(1));
     }
 
     @Test
-    public void updateStudent() {
+    public void updateStudent() throws StudentNotFoundException {
         serviceTest.updateStudent(student, "new course", "new name", "new date of birth");
         assertEquals("new course", student.getCourseTitle());
         assertEquals("new name", student.getStudentName());
@@ -36,13 +36,14 @@ public class StudentManagerServiceTest {
     }
 
     @Test
-    public void assignModule() {
+    public void assignModule() throws StudentNotFoundException {
         serviceTest.assignModule(student, module);
         assertEquals(1, student.getModuleSize());
     }
 
     @Test
-    public void removeModuleAssignment() {
+    public void removeModuleAssignment() throws StudentNotFoundException {
+        serviceTest.addStudent(1, student);
         serviceTest.assignModule(student, module);
         serviceTest.removeModuleAssignment(student, module);
         assertEquals(0, student.getModuleSize());

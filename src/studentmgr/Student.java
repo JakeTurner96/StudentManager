@@ -1,51 +1,61 @@
 package studentmgr;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
-public class Student implements Record {
+public class Student {
 
     private int studentID;
     private String courseTitle;
     private String name;
     private String dateOfBirth;
-    private HashMap<Integer, Module> modules;
+    private ArrayList<Module> modules;
 
     public Student(int studentID, String courseTitle, String name, String dateOfBirth) {
         this.studentID = studentID;
         this.courseTitle = courseTitle;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
-        modules = new HashMap<>();
+        modules = new ArrayList<>();
     }
 
-    @Override
-    public int getID() {
+    public int getStudentID() {
         return studentID;
     }
 
-    @Override
-    public String getTitle() {
+    public String getCourseTitle() {
         return courseTitle;
     }
 
-    @Override
-    public void setTitle(String newTitle) {
-        courseTitle = newTitle;
+    public void setCourseTitle(String newCourseTitle){
+        courseTitle = newCourseTitle;
     }
 
     public String getStudentName() {
         return name;
     }
 
+    public void setStudentName(String newName) {
+        name = newName;
+    }
+
     public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void updateName(String newName) {
-        name = newName;
-    }
-
-    public void updateDateOfBirth(String newDateOfBirth) {
+    public void setDateOfBirth(String newDateOfBirth) {
         dateOfBirth = newDateOfBirth;
     }
+
+    public void addModule(Module module){
+        modules.add(module);
+    }
+
+    public void removeModule(Module module){
+        modules.remove(module);
+    }
+
+    public int getModuleSize(){
+        return modules.size();
+    }
+
 }

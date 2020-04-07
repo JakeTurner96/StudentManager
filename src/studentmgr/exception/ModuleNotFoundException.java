@@ -1,4 +1,4 @@
-package studentmgr.test;
+package studentmgr.exception;
 
 public class ModuleNotFoundException extends Exception {
     public ModuleNotFoundException(String messgae){

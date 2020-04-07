@@ -1,74 +1,55 @@
-package studentmgr.test;
+package studentmgr.tests;
 
-import org.junit.Test;
-import studentmgr.Module;
-import studentmgr.Student;
-import studentmgr.StudentManagerService;
+import org.junit.Before;
+import org.junit.jupiter.api.Order;
+import studentmgr.exception.StudentNotFoundException;
+import studentmgr.pojo.Student;
+import studentmgr.service.StudentManagerService;
 
-import static org.junit.Assert.*;
+import java.util.Date;
 
-public class StudentManagerServiceTest {
+import static org.junit.jupiter.api.Assertions.*;
 
-    private final StudentManagerService serviceTest = StudentManagerService.getInstance();
-    private Student student = new Student(1, "test title", "test name", "dd/mm/yyyy");
-    private Module module = new Module(1, "test module", "50%", "50%");
+/**
+ * @author Soumen Karmakar
+ * 07/04/2020
+ */
+class StudentManagerServiceTest {
 
+    static StudentManagerService studentManagerService;
+    static Student student;
 
-    @Test
-    public void addStudent() {
-        serviceTest.addStudent(1, student);
-        assertTrue(serviceTest.studentExists(1));
+    @org.junit.jupiter.api.BeforeAll
+    static void getInstance() {
+        studentManagerService = StudentManagerService.getInstance();
+        student = new Student(1, "Computer Science", "Jake Turner", new Date());
     }
 
-    @Test
-    public void removeStudent() throws StudentNotFoundException {
-        serviceTest.addStudent(1, student);
-        serviceTest.removeStudent(1);
-        assertFalse(serviceTest.studentExists(1));
+    @org.junit.jupiter.api.Test
+    @Order(1)
+    void addStudent() {
+        studentManagerService.addStudent(student);
+        assertTrue(!studentManagerService.getStudentList().isEmpty());
     }
 
-    @Test
-    public void updateStudent() throws StudentNotFoundException {
-        serviceTest.updateStudent(student, "new course", "new name", "new date of birth");
-        assertEquals("new course", student.getCourseTitle());
-        assertEquals("new name", student.getStudentName());
-        assertEquals("new date of birth", student.getDateOfBirth());
+    @org.junit.jupiter.api.Test
+    void removeStudent() throws StudentNotFoundException {
+        studentManagerService.removeStudent(student);
     }
 
-    @Test
-    public void assignModule() throws StudentNotFoundException {
-        serviceTest.assignModule(student, module);
-        assertEquals(1, student.getModuleSize());
+    @org.junit.jupiter.api.Test
+    void updateStudent() {
     }
 
-    @Test
-    public void removeModuleAssignment() throws StudentNotFoundException {
-        serviceTest.addStudent(1, student);
-        serviceTest.assignModule(student, module);
-        serviceTest.removeModuleAssignment(student, module);
-        assertEquals(0, student.getModuleSize());
+    @org.junit.jupiter.api.Test
+    void exportStudents() {
     }
 
-    @Test
-    public void getStudent() {
-        serviceTest.addStudent(1, student);
-        assertEquals(student, serviceTest.getStudent(1));
+    @org.junit.jupiter.api.Test
+    void assignModule() {
     }
 
-    @Test
-    public void studentExists() {
-        serviceTest.addStudent(1, student);
-        assertTrue(serviceTest.studentExists(1));
+    @org.junit.jupiter.api.Test
+    void removeModuleAssignment() {
     }
-
-    @Test
-    public void generateID() {
-        assertEquals(1, serviceTest.generateID());
-    }
-
-    @Test
-    public void getLength() {
-       assertEquals(0, serviceTest.getLength());
-    }
-
 }

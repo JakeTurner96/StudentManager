@@ -1,55 +1,62 @@
-package studentmgr;
+package studentmgr.service;
 
-import studentmgr.test.StudentNotFoundException;
+import studentmgr.pojo.Module;
+import studentmgr.pojo.Student;
+import studentmgr.exception.StudentAlreadyExistException;
+import studentmgr.exception.StudentNotFoundException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
-public class StudentManagerService{
+public class StudentManagerService {
 
-    private HashMap<Integer, Student> studentHashMap;
+    private List<Student> studentList;
     private static final StudentManagerService studentRecordInstance = new StudentManagerService();
 
     private StudentManagerService() {
-        studentHashMap = new HashMap<>();
+        studentList = new ArrayList<>();
     }
 
     public static StudentManagerService getInstance() {
         return studentRecordInstance;
     }
 
-    public void addStudent(int ID, Student student) {
-        try{
-            studentHashMap.put(ID, student);
-        }catch (RuntimeException e){
-            System.out.println("Unable to add student");
+    public void addStudent(Student student) throws StudentAlreadyExistException {
+        if (!studentExists(student)) {
+            studentList.add(student);
+        } else {
+            throw new StudentAlreadyExistException("Student already exists !");
         }
     }
 
-    public void removeStudent(int ID) throws StudentNotFoundException {
-        if(!studentExists(ID)){
+    private boolean studentExists(Student student) {
+        return false;
+    }
+
+    public void removeStudent(Student student) throws StudentNotFoundException {
+        if (!studentExists(student)) {
             throw new StudentNotFoundException("Student not found");
-        }else{
-            studentHashMap.remove(ID);
+        } else {
+            studentList.remove(student);
         }
     }
 
-    public void updateStudent(Student student, String newCourse, String newName, String newDateOfBirth) throws StudentNotFoundException {
-        if(!studentExists(student.getStudentID())){
+    public void updateStudent(Student old, Student newS) throws StudentNotFoundException {
+        if (!studentExists(old)) {
             throw new StudentNotFoundException("Student not found");
-        }else{
-            student.setCourseTitle(newCourse);
-            student.setStudentName(newName);
-            student.setDateOfBirth(newDateOfBirth);
+        } else {
+            removeStudent(old);
+            addStudent(newS);
         }
     }
 
     public void exportStudents() throws FileNotFoundException {
 
-        try{
+        try {
             PrintWriter printWriter = new PrintWriter(new File("test.csv"));
             StringBuilder sb = new StringBuilder();
 
@@ -64,9 +71,7 @@ public class StudentManagerService{
             sb.append("Modules");
             sb.append("\n");
 
-            for(int ID : studentHashMap.keySet()){
-                Student student = getStudent(ID);
-
+            for (Student student : studentList) {
                 sb.append(student.getStudentID());
                 sb.append(", ");
                 sb.append(student.getCourseTitle());
@@ -81,40 +86,28 @@ public class StudentManagerService{
 
             printWriter.write(sb.toString());
             printWriter.close();
-        }catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Unable to export to .CSV");
         }
     }
 
     public void assignModule(Student student, Module module) throws StudentNotFoundException {
-        if(!studentExists(student.getStudentID())){
+        if (!studentExists(student)) {
             throw new StudentNotFoundException("Student not found");
-        }else{
+        } else {
             student.addModule(module);
         }
     }
 
     public void removeModuleAssignment(Student student, Module module) throws StudentNotFoundException {
-        if(!studentExists(student.getStudentID())){
+        if (!studentExists(student)) {
             throw new StudentNotFoundException("Student not found");
-        }else{
+        } else {
             student.removeModule(module);
         }
     }
 
-    public Student getStudent(int ID)  {
-        return studentHashMap.get(ID);
-    }
-
-    public boolean studentExists(int ID) {
-        return studentHashMap.containsKey(ID);
-    }
-
-    public int generateID() {
-        return getLength() + 1;
-    }
-
-    public int getLength() {
-        return studentHashMap.size();
+    public List<Student> getStudentList() {
+        return studentList;
     }
 }

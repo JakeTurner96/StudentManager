@@ -1,4 +1,4 @@
-package studentmgr.test;
+package studentmgr.exception;
 
 public class StudentNotFoundException extends Exception {
     public StudentNotFoundException(String message){

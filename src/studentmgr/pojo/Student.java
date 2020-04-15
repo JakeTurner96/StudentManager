@@ -1,24 +1,27 @@
 package studentmgr.pojo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
-public class Student {
+public class Student{
 
     private int studentID;
     private String courseTitle;
     private String name;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     private List<Module> modules;
 
-    public Student(int studentID, String courseTitle, String name, Date dateOfBirth) {
-        this.studentID = studentID;
-        this.courseTitle = courseTitle;
-        this.name = name;
-        this.dateOfBirth = dateOfBirth;
-        modules = new ArrayList<>();
+    public Student(int studentID, String courseTitle, String name, LocalDate dateOfBirth) {
+
+        Runnable studentTask = () -> {
+            this.studentID = studentID;
+            this.courseTitle = courseTitle;
+            this.name = name;
+            this.dateOfBirth = dateOfBirth;
+            modules = new ArrayList<>();
+        };
+
+        new Thread(studentTask).start();
     }
 
     public int getStudentID() {
@@ -41,11 +44,11 @@ public class Student {
         name = newName;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date newDateOfBirth) {
+    public void setDateOfBirth(LocalDate newDateOfBirth) {
         dateOfBirth = newDateOfBirth;
     }
 
@@ -61,16 +64,13 @@ public class Student {
         return modules.size();
     }
 
-
     @Override
     public String toString() {
-        return "{\"_class\":\"Student\", " +
-                "\"studentID\":\"" + studentID + "\"" + ", " +
-                "\"courseTitle\":" + (courseTitle == null ? "null" : "\"" + courseTitle + "\"") + ", " +
-                "\"name\":" + (name == null ? "null" : "\"" + name + "\"") + ", " +
-                "\"dateOfBirth\":" + (dateOfBirth == null ? "null" : "\"" + dateOfBirth + "\"") + ", " +
-                "\"modules\":" + (modules == null ? "null" : Arrays.toString(modules.toArray())) +
-                "}";
+        return  studentID + ", " +
+                (courseTitle == null ? "null" : courseTitle) + ", " +
+                (name == null ? "null" : name) + ", " +
+                (dateOfBirth == null ? "null" : dateOfBirth) + ", " +
+                (modules == null ? "null" : Arrays.toString(modules.toArray()));
     }
 
     @Override
@@ -83,10 +83,10 @@ public class Student {
         if (getStudentID() != student.getStudentID()) return false;
         if (getCourseTitle() != null ? !getCourseTitle().equals(student.getCourseTitle()) : student.getCourseTitle() != null)
             return false;
-        if (name != null ? !name.equals(student.name) : student.name != null) return false;
+        if (!Objects.equals(name, student.name)) return false;
         if (getDateOfBirth() != null ? !getDateOfBirth().equals(student.getDateOfBirth()) : student.getDateOfBirth() != null)
             return false;
-        return modules != null ? modules.equals(student.modules) : student.modules == null;
+        return Objects.equals(modules, student.modules);
     }
 
     @Override

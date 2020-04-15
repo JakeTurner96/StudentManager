@@ -4,9 +4,7 @@ import studentmgr.pojo.Module;
 import studentmgr.pojo.Student;
 import studentmgr.exception.StudentAlreadyExistException;
 import studentmgr.exception.StudentNotFoundException;
-
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -29,12 +27,12 @@ public class StudentManagerService {
         if (!studentExists(student)) {
             studentList.add(student);
         } else {
-            throw new StudentAlreadyExistException("Student already exists !");
+            throw new StudentAlreadyExistException("Student already exists!");
         }
     }
 
     private boolean studentExists(Student student) {
-        return false;
+        return studentList.contains(student);
     }
 
     public void removeStudent(Student student) throws StudentNotFoundException {
@@ -54,7 +52,15 @@ public class StudentManagerService {
         }
     }
 
-    public void exportStudents() throws FileNotFoundException {
+    public Student getStudent(Student student ){
+        if(studentExists(student)){
+            return studentList.stream().filter(s -> s.equals(student)).findAny().orElse(null);
+        }else{
+            throw new StudentNotFoundException("Student not found!");
+        }
+    }
+
+    public void exportStudents(){
 
         try {
             PrintWriter printWriter = new PrintWriter(new File("test.csv"));
@@ -71,21 +77,10 @@ public class StudentManagerService {
             sb.append("Modules");
             sb.append("\n");
 
-            for (Student student : studentList) {
-                sb.append(student.getStudentID());
-                sb.append(", ");
-                sb.append(student.getCourseTitle());
-                sb.append(", ");
-                sb.append(student.getStudentName());
-                sb.append(", ");
-                sb.append(student.getDateOfBirth());
-                sb.append(", ");
-                sb.append(student.getModuleSize());
-                sb.append("\n");
-            }
-
+            studentList.stream().forEach(sb::append);
             printWriter.write(sb.toString());
             printWriter.close();
+
         } catch (IOException e) {
             System.out.println("Unable to export to .CSV");
         }

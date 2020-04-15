@@ -8,10 +8,14 @@ public class Module {
     private String examWeight;
 
     public Module(int moduleID, String moduleTitle, String examWeight, String courseworkWeight) {
-        this.moduleID = moduleID;
-        this.moduleTitle = moduleTitle;
-        this.examWeight = examWeight;
-        this.courseworkWeight = courseworkWeight;
+
+        Runnable moduleTask = () -> {
+            this.moduleID = moduleID;
+            this.moduleTitle = moduleTitle;
+            this.examWeight = examWeight;
+            this.courseworkWeight = courseworkWeight;
+        };
+        new Thread(moduleTask).start();
     }
 
     public int getModuleID() {
@@ -43,6 +47,14 @@ public class Module {
     }
 
     @Override
+    public String toString() {
+        return  moduleID + ", " +
+                (moduleTitle == null ? "null" : moduleTitle) + ", " +
+                (courseworkWeight == null ? "null" : courseworkWeight ) + ", " +
+                (examWeight == null ? "null" : examWeight);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Module)) return false;
@@ -64,15 +76,5 @@ public class Module {
         result = 31 * result + (getCourseworkWeight() != null ? getCourseworkWeight().hashCode() : 0);
         result = 31 * result + (getExamWeight() != null ? getExamWeight().hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "{\"_class\":\"Module\", " +
-                "\"moduleID\":\"" + moduleID + "\"" + ", " +
-                "\"moduleTitle\":" + (moduleTitle == null ? "null" : "\"" + moduleTitle + "\"") + ", " +
-                "\"courseworkWeight\":" + (courseworkWeight == null ? "null" : "\"" + courseworkWeight + "\"") + ", " +
-                "\"examWeight\":" + (examWeight == null ? "null" : "\"" + examWeight + "\"") +
-                "}";
     }
 }

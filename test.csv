@@ -1,6 +1,2 @@
 ID, Course, Name, DoB, Modules
-1, Computer Science, Jake Turner, 16/08/1996, 2
-2, Business Management, John Smith, 20/03/1998, 2
-3, Politics, William Abercrombie, 31/01/1997, 1
-4, Veterinary Medicine, Hannah Tilbury, 11/09/1995, 4
-5, Economics, Mia Hardcastle, 04/05/1997, 1
+1, Computer Science, Jake Turner, 1996-08-16, []
